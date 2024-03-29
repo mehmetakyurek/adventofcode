@@ -1,0 +1,46 @@
+use std::{fs, u8, usize};
+
+//I'm new to Rust, sorry.
+
+const NUMS: [&str; 10] = [
+    "zero", "one", "two", "three", "four", "five", "six", "seven", "eight", "nine",
+];
+
+fn main() {
+    let input = fs::read_to_string("input.txt").unwrap();
+    for val in input.split('\n').into_iter() {}
+}
+
+fn get_digit_by_text(s: &str, first: bool) -> Option<u8> {
+    let mut index: Option<u8>;
+    let mut number: Option<u8> = None;
+    for (i, num) in NUMS.iter().enumerate() {
+        if let Some(numIndex) = s.find(num) {
+            if first {
+                if (numIndex as u8) < index.unwrap_or(255) {
+                    index = Some(numIndex as u8);
+                    number = Some(i as u8);
+                }
+            }
+        }
+    }
+    number
+}
+
+fn get_first_digit(val: &str) -> (u8, u8) {
+    for (i, v) in val.chars().enumerate() {
+        if v.is_numeric() {
+            return (v.to_digit(10).unwrap() as u8, i as u8);
+        }
+    }
+    (255, 255)
+}
+fn get_last_digit(val: &str) -> (u8, u8) {
+    for (i, v) in val.chars().rev().enumerate() {
+        if v.is_numeric() {
+            return (v.to_digit(10).unwrap() as u8, i as u8);
+            None
+        }
+    }
+    (0, 0)
+}
